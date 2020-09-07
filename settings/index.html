@@ -1,70 +1,67 @@
 <!doctype html>
 <html>
-<head>
+    <head>
+        <!-- The '/homey.js' script must be included in your settings view to work -->
+        <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+    </head>
+    <body>
 
-    <!-- The '/homey.js' script must be included in your settings view to work -->
-    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
-
-</head>
-<body>
-
-<h1 data-i18n="settings.title"> <!-- Translation --> </h1>
-<p data-i18n="settings.subtitle"> <!-- Translation --> </p>
+        <h1 data-i18n="settings.title"> <!-- Translation --> </h1>
+        <p data-i18n="settings.subtitle"> <!-- Translation --> </p>
 
 
-<fieldset>  <!-- Credential label field -->
-    <legend data-i18n="settings.credentials"> </legend>
-    <div class="field row">
-        <label for="email" data-i18n="settings.email" > </label>
-        <input id="email" type="text" value="">
-    </div>
-    <div class="field row">
-        <label for="password" data-i18n="settings.password"> </label>
-        <input id="password" type="password" value="">
-    </div>
-</fieldset>
+        <fieldset>  <!-- Credential label field -->
+            <legend data-i18n="settings.credentials"> </legend>
+            <div class="field row">
+                <label for="email" data-i18n="settings.email" > </label>
+                <input id="email" type="text" value="">
+            </div>
+            <div class="field row">
+                <label for="password" data-i18n="settings.password"> </label>
+                <input id="password" type="password" value="">
+            </div>
+        </fieldset>
 
-<button id="save" class="right" data-i18n="settings.next"> </button>
+        <button id="save" class="right" data-i18n="settings.next"> </button>
 
-<script type="text/javascript">
+        <script type="text/javascript">
 
-    // a method named 'onHomeyReady' must be present in your code
-    function onHomeyReady(Homey) {
+            // a method named 'onHomeyReady' must be present in your code
+            function onHomeyReady(Homey) {
+                // Tell Homey we're ready to be displayed
+                Homey.ready();
 
+                var emailElement = document.getElementById('email');
+                var passwordElement = document.getElementById('password');
+                var saveElement = document.getElementById('save');
 
-        // Tell Homey we're ready to be displayed
-        Homey.ready();
+                Homey.get('email', function (err, email) {
+                    if (err) return Homey.alert(err);
+                    emailElement.value = email;
+                });
 
-        var emailElement = document.getElementById('email');
-        var passwordElement = document.getElementById('password');
-        var saveElement = document.getElementById('save');
+                Homey.get('password', function (err, password) {
+                    if (err) return Homey.alert(err);
+                    passwordElement.value = password;
+                });
 
-        Homey.get('username', function (err, username) {
-            if (err) return Homey.alert(err);
-            emailElement.value = username;
-        });
+                saveElement.addEventListener('click', function (e) {
 
-        Homey.get('password', function (err, password) {
-            if (err) return Homey.alert(err);
-            passwordElement.value = password;
-        });
+                    Homey.set('email', emailElement.value, function (err) {
+                        if (err) return Homey.alert(err);
+                    });
+                    Homey.set('password', passwordElement.value, function (err) {
+                        if (err) return Homey.alert(err);
+                    });
 
-        saveElement.addEventListener('click', function (e) {
-
-            Homey.set('email', emailElement.value, function (err) {
-                if (err) return Homey.alert(err);
-            });
-            Homey.set('password', passwordElement.value, function (err) {
-                if (err) return Homey.alert(err);
-            });
-            
-            Homey.alert("Thanks! We have stored your account information on your Homey!");
+                    //translation-function for translated alerts
+                    Homey.alert(Homey.__("settings.alert"));
 
 
 
-        });
-    }
-</script>
+                });
+            }
+        </script>
 
-</body>
+    </body>
 </html>
