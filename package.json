@@ -4,5 +4,8 @@
   "main": "app.js",
   "devDependencies": {
     "homey": "^2.6.1"
+  },
+  "dependencies": {
+    "crownstone-cloud": "^0.12.1"
   }
 }
