@@ -24,7 +24,7 @@
 
         <button id="save" class="right" data-i18n="settings.next"> </button>
 
-        <script type="text/javascript" src="index.login.js"></script>
+<!--        <script type="text/javascript" src="index.login.js"></script>-->
 
         <script type="text/javascript">
 
@@ -56,9 +56,8 @@
                         if (err) return Homey.alert(err);
                     });
 
+                    //Homey.openURL("http://localhost:3000");
                     //translation-function for translated alerts
-
-
 
                     Homey.alert(Homey.__("settings.alert"));
 
