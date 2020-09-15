@@ -10,10 +10,10 @@ async function login(CrownstoneUsername, CrownstonePassword){
 
 	let idFilter = '5f4f69a6145e6e0004f60f0d';
 	let dataFromId = await cloud.crownstone(idFilter).data();
-	let leds = cloud.crownstone('5f4f69a6145e6e0004f60f0d');
-	await leds.turnOn();
+	let light = cloud.crownstone('5f4f69a6145e6e0004f60f0d');
+	await light.turnOn();
 	sleep(5000);
-	await leds.turnOff();
+	await light.turnOff();
 }
 
 function sleep(milliseconds) {
