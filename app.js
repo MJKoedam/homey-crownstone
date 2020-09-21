@@ -3,10 +3,18 @@
 const Homey = require('homey');
 let cloudLib = require("crownstone-cloud")
 let cloud = new cloudLib.CrownstoneCloud();
+let userToken;
 
 async function login(email, password){
 	await cloud.login(email, password);
-	console.log(await cloud.me().data());
+
+	userToken = await cloud.me().rest.tokenStore.accessToken;
+	console.log("Token: " + userToken);
+
+	// this.log(cloud.me().data());
+
+	// userData = cloud.me();
+	// console.log(userData);
 
 	// let idFilter = '5f4f69a6145e6e0004f60f0d';
 	// let dataFromId = await cloud.crownstone(idFilter).data();
@@ -19,6 +27,9 @@ async function login(email, password){
 class MyApp extends Homey.App {
 
 	onInit() {
+
+		this.testData = "test complete!";
+
 		this.log(`App ${Homey.app.manifest.name.en} is running...`);
 
 		this.email = Homey.ManagerSettings.get("email");
@@ -33,8 +44,13 @@ class MyApp extends Homey.App {
 
 		login(this.email, this.password).catch((e) => { console.log("There was a problem running this code:", e); });
 	}
+	getUserToken(){
+		return userToken;
+	}
 
 }
+
+
 
 function sleep(milliseconds) {
 	const date = Date.now();
