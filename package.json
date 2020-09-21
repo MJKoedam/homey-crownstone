@@ -6,6 +6,6 @@
     "homey": "^2.6.1"
   },
   "dependencies": {
-    "crownstone-cloud": "^0.16.0"
+    "crownstone-cloud": "^0.17.3"
   }
 }
