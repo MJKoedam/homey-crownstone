@@ -25,12 +25,17 @@ function sleep(milliseconds) {
 }
 
 class MyApp extends Homey.App {
-	
+
 	onInit() {
 		this.log(`App ${Homey.app.manifest.name.en} is running...`);
 
 		this.email = Homey.ManagerSettings.get("email");
 		this.password = Homey.ManagerSettings.get("password");
+
+		Homey.ManagerSettings.on('set', function(){
+			this.log("App Settings Were Changed!");
+			//put code in here that runs when userdata changed
+		});
 
 		login(this.email, this.password).catch((e) => { console.log("There was a problem running this code:", e); });
 	}

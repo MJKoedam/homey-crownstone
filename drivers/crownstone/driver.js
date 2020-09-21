@@ -2,7 +2,7 @@
 
 const Homey = require('homey');
 
-class MyDriver extends Homey.Driver {
+class CrownstoneDriver extends Homey.Driver {
 	
 	onInit() {
 		this.log('Crownstone driver has been inited');
@@ -10,4 +10,4 @@ class MyDriver extends Homey.Driver {
 	
 }
 
-module.exports = MyDriver;
+module.exports = CrownstoneDriver;
