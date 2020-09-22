@@ -1,20 +1,36 @@
 'use strict';
 
 const Homey = require('homey');
+let accessToken;
+
+async function getCurrentLocation(cloud){
+	cloud.setAccessToken(accessToken);
+	let userReference = await cloud.me();
+	// console.log(userReference);
+	let userLocation = await userReference.currentLocation();
+	// console.log(userLocation);
+	if(userLocation.length > 0){
+		if(userLocation[0]['inSpheres'].length > 0){
+			let sphereId = userLocation[0]['inSpheres'][0]['sphereId'];
+			// console.log(sphereId);
+			let allCs = await cloud.sphere(sphereId).crownstones();
+			for (let i = 0; i < allCs.length; i++){
+				console.log("This is Crownstone " + i + " with ID: " + allCs[i].id + " and name: " + allCs[i].name);
+			}
+		}
+	}
+}
 
 class CrownstoneDriver extends Homey.Driver {
 	
 	onInit() {
 		this.log('Crownstone driver has been inited');
-		// this.cloud = Homey.app.getCloud();
-
-		this.log(Homey.app.getUserToken());
-		//[TODO: get accesstoken to work in this file]
-
+		this.cloud = Homey.app.getCloud();
+		accessToken = Homey.app.getUserToken(function(token){accessToken = token});
 	}
 	onPairListDevices(data, callback){
 		this.log("Start discovering Crownstones in cloud");
-
+		getCurrentLocation(this.cloud).catch((e) => { console.log("There was a problem running this code:", e); });
 	}
 }
 
