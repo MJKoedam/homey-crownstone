@@ -36,7 +36,7 @@ class CrownstoneDriver extends Homey.Driver {
 		let value = getCurrentLocation(this.cloud, function(devices){
 			console.log("getCurrentLocation has returned");
 			callback(null, devices);
-		});
+		}).catch((e) => { console.log("There was a problem looking for Crownstones in the cloud:", e); });
 	}
 }
 
