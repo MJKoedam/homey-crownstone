@@ -3,25 +3,20 @@
 const Homey = require('homey');
 let cloudLib = require("crownstone-cloud")
 let cloud = new cloudLib.CrownstoneCloud();
-let userToken;
+let accessToken;
 
+// make a connection with the cloud and obtain the accesstoken
 async function login(email, password){
-	console.log("login with " + email + " and password: " + password);
-	if(email == "martjankoedam42@gmail.com"){
-		console.log("email is the same!");
-	}
-	if(password == "CrownstoneIntern"){
-		console.log("password is the same!");
-	}
 	await cloud.login(email, password);
 	let userData = await cloud.me();
-	userToken = userData.rest.tokenStore.accessToken;
+	accessToken = userData.rest.tokenStore.accessToken;
 	console.log("Accesstoken is now defined.");
-	console.log("Token: " + userToken);
+	console.log("Token: " + accessToken);
 }
 
+// return accesstoken as soon as it is obtained
 function retrieveAccessToken(callback){
-	if(typeof userToken !== "undefined") {
+	if(typeof accessToken !== "undefined") {
 		callback();
 	} else {
 		setTimeout(function(){
@@ -35,10 +30,9 @@ class CrownstoneApp extends Homey.App {
 		this.log(`App ${Homey.app.manifest.name.en} is running...`);
 		this.email = Homey.ManagerSettings.get("email");
 		this.password = Homey.ManagerSettings.get("password");
-		this.log(this.email)
-		this.log(this.password)
 		login(this.email, this.password).catch((e) => { console.log("There was a problem making a connection with the cloud:", e); });
 
+		// this function runs when a user changed the credentials..
 		Homey.ManagerSettings.on('set', function(){
 			this.log("Credentials were changed. Creating new cloud instance..");
 			this.email = Homey.ManagerSettings.get("email");
@@ -49,7 +43,7 @@ class CrownstoneApp extends Homey.App {
 
 	getUserToken(callback) {
 		retrieveAccessToken(function(){
-			callback(userToken);
+			callback(accessToken);
 		});
 	}
 	getCloud(){
