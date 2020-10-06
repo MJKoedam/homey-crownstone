@@ -6,7 +6,7 @@ let accessToken;
 class CrownstoneDevice extends Homey.Device {
 	
 	onInit() {
-		this.log('MyDevice has been inited');
+		this.log(this.getName() + ' has been inited');
 		this.log('Name:', this.getName());
 		this.log('Class:', this.getClass());
 		console.log(this.getData().id);
@@ -17,7 +17,7 @@ class CrownstoneDevice extends Homey.Device {
 
 	//Switch the Crownstone
 	async onCapabilityOnoff( value, opts ) {
-		this.log("Change state to " + value);
+		this.log('Change state to ' + value);
 		if(value){
 			await this.cloud.crownstone(this.getData().id).turnOn()
 		} else if(!value){
@@ -28,12 +28,12 @@ class CrownstoneDevice extends Homey.Device {
 
 	// this method is called when the Device is added
 	onAdded() {
-		this.log(this.getName() + " has been added.");
+		this.log(this.getName() + ' has been added.');
 	}
 
 	// this method is called when the Device is deleted
 	onDeleted() {
-		this.log(this.getName() + " has been deleted.");
+		this.log(this.getName() + ' has been deleted.');
 	}
 
 }
