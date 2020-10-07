@@ -10,9 +10,9 @@ class CrownstoneDevice extends Homey.Device {
 		this.log('Name:', this.getName());
 		this.log('Class:', this.getClass());
 		console.log(this.getData().id);
-		this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
 		this.cloud = Homey.app.getCloud();
 		accessToken = Homey.app.getUserToken(function(token){accessToken = token;});
+		this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
 	}
 
 	//Switch the Crownstone

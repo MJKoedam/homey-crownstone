@@ -40,7 +40,7 @@ class CrownstoneApp extends Homey.App {
 			login(this.email, this.password).catch((e) => { console.log('There was a problem making a connection with the cloud:', e); });
 		});
 	}
-
+	// [todo] simplify code
 	getUserToken(callback) {
 		retrieveAccessToken(function(){
 			callback(accessToken);
