@@ -9,7 +9,6 @@
         <h1 data-i18n="settings.title"> <!-- Translation --> </h1>
         <p data-i18n="settings.subtitle"> <!-- Translation --> </p>
 
-
         <fieldset>  <!-- Credential label field -->
             <legend data-i18n="settings.credentials"> </legend>
             <div class="field row">
@@ -23,9 +22,6 @@
         </fieldset>
 
         <button id="save" class="right" data-i18n="settings.next"> </button>
-
-<!--        <script type="text/javascript" src="index.login.js"></script>-->
-
         <script type="text/javascript">
 
             // a method named 'onHomeyReady' must be present in your code
@@ -56,14 +52,9 @@
                         if (err) return Homey.alert(err);
                     });
 
-                    //Homey.openURL("http://localhost:3000");
-                    //translation-function for translated alerts
-
                     Homey.alert(Homey.__("settings.alert"));
-
                 });
             }
         </script>
-
     </body>
 </html>
